@@ -1,63 +1,90 @@
 import pafy
-from unidecode import unidecode
 import urllib.request
 import feedparser
+from unidecode import unidecode
+import re
 
 
 RSS_URL = "http://moldovacrestina.md/rss/video"
 #RSS_URL = "http://feeds.gawker.com/lifehacker/vip"
 
-
-def download_audio(url):
-    #url = "http://www.youtube.com/watch?v=I0dQx4SNSwE"
-    video = pafy.new(url)
-    best = video.getbestaudio("m4a")
-    fileName = unidecode(video.title)
-    best.download(fileName)
-
-
-def get_rss_content(rss_url):
-    return get_json(rss_url)
-
-
-def get_mctv_article_links(rssjson):
-    links = []
-    for article in rssjson:
-        #links.append(article[0]["link"])
-        print(article)
-    return links
-
+YOUTUBE_EMBED_URL = "http://www.youtube.com/embed/"
 
 #---------------------------------------
-
-def get_rss_items(rss_url):
-    feed = feedparser.parse(rss_url)
-
-    items = []
-
-    for item in feed['entries']:
-        title = unidecode(item['title'])
-        link = item['link']
-        description = unidecode(item['description'])
-        items.append(Article(title, link, description))
-
-    return items
+#---------------- UTILS ----------------
 
 
-def urlrequest(url):
+def url_request(url):
     """
     Make a url request
     """
     req = urllib.request.urlopen(url)
     return req.read()
 
+#----------------------------------------
+#-------------- Fetch RSS ---------------
+
+
+def get_rss_items(rss_url):
+        feed = feedparser.parse(rss_url)
+
+        items = []
+
+        for item in feed['entries']:
+            title = unidecode(item['title'])
+            link = item['link']
+            description = unidecode(item['description'])
+            items.append(Article(title, link, description))
+
+        return items
+
+
+#----------------------------------------
+#------------ Download audio ------------
+
+
+def download_audio(url):
+    #url = "http://www.youtube.com/watch?v=I0dQx4SNSwE"
+    video = pafy.new(url)
+    best = video.getbestaudio("m4a")
+    filename = unidecode(video.title)
+    best.download(filename)
+
+
+#----------------------------------------
+#------------- Get video ID -------------
+
+
+def get_video_id(page_url):
+    page_html = url_request(page_url)
+    page_html = page_html.decode()
+
+    m = re.search('http://www.youtube.com/embed/', page_html)
+    
+
+
+    #"http://www.youtube.com/embed/p1JuU4OJ9NY"
+
+    start = index_start_url + 30
+    print(start)
+
+    video_id = page_html[start, 11]
+
+    return video_id
+
 
 #----------------------------------------
 
+
 def main():
-    article_links = get_rss_items(RSS_URL)
-    for a in article_links:
+    #get articles from RSS
+    rss_articles = get_rss_items(RSS_URL)
+
+    #get HTML contents
+    for a in rss_articles:
         print(a)
+        video_id = get_video_id(a.link)
+        print(video_id)
 
 
 class Article:
