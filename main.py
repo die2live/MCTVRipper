@@ -1,12 +1,8 @@
-import sys
-
-sys.path.append(r"/home/code4him/local/lib/python2.6/site-packages")
 import pafy
 from unidecode import unidecode
 import urllib.request
-#import simplejson as json
 import feedparser
-#from xml2json import xml2json
+
 
 RSS_URL = "http://moldovacrestina.md/rss/video"
 #RSS_URL = "http://feeds.gawker.com/lifehacker/vip"
@@ -34,8 +30,7 @@ def get_mctv_article_links(rssjson):
 
 #---------------------------------------
 
-def get
-    _rss_items(rss_url):
+def get_rss_items(rss_url):
     feed = feedparser.parse(rss_url)
 
     items = []
@@ -49,20 +44,6 @@ def get
     return items
 
 
-#def get_json(url):
-#    """
-#    Make a url request and return as a JSON object
-#    """
-#    res = urlrequest(url)
-    #decodedres = unidecode(res)
-    #return loads(res)
-    #obj = objectify.fromstring(decodedres)
-    #json = objectJSONEncoder().encode(obj)
-#    options = type("OptionParser", (object,), {"pretty": False})
-    #jsonfromxml = xml2json(res, options)
-    #return jsonfromxml  #json.load(jsonfromxml)
-
-
 def urlrequest(url):
     """
     Make a url request
@@ -74,7 +55,6 @@ def urlrequest(url):
 #----------------------------------------
 
 def main():
-    #rss_content = get_rss_content(RSS_URL)
     article_links = get_rss_items(RSS_URL)
     for a in article_links:
         print(a)
