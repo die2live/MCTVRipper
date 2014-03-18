@@ -45,7 +45,7 @@ def get_video_id(page_url):
 
 def main():
     #get articles from RSS
-    rss_articles = RssFetcher.get_rss_items(RSS_URL)
+    rss_articles = RssFetcher.get_rss_items(RSS_URL, "MCTV")
 
     #get HTML contents
     for a in rss_articles:
