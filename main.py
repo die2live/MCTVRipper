@@ -60,18 +60,15 @@ def get_video_id(page_url):
     page_html = page_html.decode()
 
     m = re.search(r'http://www.youtube.com/embed/(.*)(\" )+', page_html)
-    print(m.group(0))
 
-
+    embed_url = m.group()
+    print(embed_url)
 
     #"http://www.youtube.com/embed/p1JuU4OJ9NY"
 
-    #start = index_start_url + 30
-    #print(start)
+    video_id = embed_url[29:40]
 
-    #video_id = page_html[start, 11]
-
-    #return video_id
+    return video_id
 
 
 #----------------------------------------
