@@ -1,15 +1,13 @@
 __author__ = 'DAi'
 
+from Article import Article
 import feedparser
 from unidecode import unidecode
 
 
-class RssFetcher:
-    rss_url = ""
+class RssFetcher(object):
 
-    def __init__(self, rss_url):
-        self.rss_url = rss_url
-
+    @staticmethod
     def get_rss_items(rss_url):
         feed = feedparser.parse(rss_url)
 
@@ -17,8 +15,10 @@ class RssFetcher:
 
         for item in feed['entries']:
             title = unidecode(item['title'])
+            # title = item['title'].decode()
             link = item['link']
             description = unidecode(item['description'])
+            # description = item['description'].decode()
             items.append(Article(title, link, description))
 
         return items
