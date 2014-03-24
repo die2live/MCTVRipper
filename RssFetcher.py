@@ -21,7 +21,7 @@ class RssFetcher(object):
             video_id = self.get_video_id(link)
             category = self.get_article_category(link)
             
-            items.append(Article(title, link, description, video_id, alias))
+            items.append(Article(title, category, link, description, video_id, alias))
 
         return items
       
@@ -55,13 +55,11 @@ class RssFetcher(object):
         #<a class="c20a blueh" href="/video/index?cat_alias=predici">Predici</a>
         #<a class="c20a blueh" href="/video/index?category=546">Romani II</a>
         #<a class="c20a greenh" href="/news/index?cat_alias=nationale">Naționale</a>
-        #<a class="c20a blueh" href="/video/index?category=546">Romani II</a>
-        m = re.search(r'<a class=\"c20a [\w\W]+\" href=\"/video/index[\W\w]+\">([\W\w]+)</a>', page_html)
+        #<a class="c20a blueh" href="/video/index?category=546">Romani II</a>        
+        m = re.search(r'<a class=\"c20a\b[^>]*>(.*?)</a>', page_html)
         print(m.group())
-        #print(m.group(1))
-        #print(m.group(2))
-        #print(m.group(3))
-        return ''
+        #print(m.group(1))        
+        return m.group(1)
 
 
     #----------------------------------------
