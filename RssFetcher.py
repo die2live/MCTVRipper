@@ -25,7 +25,7 @@ class RssFetcher(object):
 
         return items
       
-      
+
     #------------- Get video ID -------------
 
 

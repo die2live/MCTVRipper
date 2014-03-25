@@ -18,7 +18,12 @@ def main():
     for a in rss_articles:
         print(a)        
         md = MediaDownloader()
-        #md.download_audio(a.video_id, 'tmp/', a.title)
+        try:
+            md.download_audio(a.video_id, 'tmp/', a.title)
+        except IOError as e:
+            #TODO: add some handling
+            print(e)
+            
 
 
 if __name__ == '__main__':
