@@ -31,7 +31,7 @@ class RssFetcher(object):
 
     def get_video_id(self, page_url):
         page_html = utils.url_request(page_url)
-        page_html = page_html.decode()
+        page_html = unidecode(page_html)  # page_html.decode()
 
         #"http://www.youtube.com/embed/p1JuU4OJ9NY"
         m = re.search(r'http://www.youtube.com/embed/(.*)(\" )+', page_html)
@@ -49,12 +49,12 @@ class RssFetcher(object):
 
     def get_article_category(self, page_url):
         page_html = utils.url_request(page_url)
-        page_html = page_html.decode()
+        page_html = unidecode(page_html)  # page_html.decode()
         
         #<a class="c20a blueh" href="/video/index?cat_alias=actual">Actual</a>
         #<a class="c20a blueh" href="/video/index?cat_alias=predici">Predici</a>
         #<a class="c20a blueh" href="/video/index?category=546">Romani II</a>
-        #<a class="c20a greenh" href="/news/index?cat_alias=nationale">Naționale</a>
+        #<a class="c20a greenh" href="/news/index?cat_alias=nationale">Nationale</a>
         #<a class="c20a blueh" href="/video/index?category=546">Romani II</a>        
         m = re.search(r'<a class=\"c20a\b[^>]*>(.*?)</a>', page_html)
         print(m.group())
