@@ -10,7 +10,9 @@ class MediaDownloader(object):
         # url = "http://www.youtube.com/watch?v=I0dQx4SNSwE"
         video = pafy.new(url)
         best = video.getbestaudio("m4a")
-        best.download(save_path + self.__get_filename(title, best.extension))
+        filename = save_path + self.__get_filename(title, best.extension)
+        best.download(filename)
+        return filename
 
     def __get_filename(self, title, extension):        
         ret = unidecode(title)
@@ -24,4 +26,5 @@ class MediaDownloader(object):
         ret = ret.replace('.', '')
         ret = ret.replace('!', '')
         ret = ret.replace('?', '')
+        ret = ret.replace(':', '')
         return ret + '.' + extension
