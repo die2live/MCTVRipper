@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __author__ = 'DAi'
 
 from Article import Article
@@ -62,8 +63,10 @@ class RssFetcher(object):
         # <a class="c20a blueh" href="/video/index?category=546">Romani II</a>        
         
         m = re.search(r'<a class=\"c20a\b[^>]*>(.*?)</a>', page_html)
-                
-        return m.group(1)
+        
+        category = m.group(1)
+        print(category)                                
+        return utils.get_webfriendly_string(category)
 
 
     #----------------------------------------

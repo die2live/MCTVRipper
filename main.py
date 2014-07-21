@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from RssFetcher import RssFetcher
 from MediaDownloader import MediaDownloader
 import utils
@@ -27,7 +28,7 @@ def main():
         try:
             print('Downloading video with id %s...' % a.video_id)
             filename = md.download_audio(a.video_id, '../tmp/', a.title)
-            utils.ftp_upload(filename, os.path.join('media', a.category), 'ftp.w-me.net', 21, 'pod@w-me.net', '***')
+            utils.ftp_upload(filename, os.path.join('media', a.category), 'ftp.w-me.net', 21, 'pod@w-me.net', '6NAmo@Jr+u9!')
         except IOError as e:
             #TODO: add some handling
             print(e)

@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 __author__ = 'DAi'
 
 import pafy
 from unidecode import unidecode
+import utils
 
 
 class MediaDownloader(object):
@@ -16,15 +18,6 @@ class MediaDownloader(object):
 
     def __get_filename(self, title, extension):        
         ret = unidecode(title)
-        ret = ret.lower()
-        ret = ret.replace(' ', '_')  
-        ret = ret.replace('&quot;', '')  
-        ret = ret.replace('&icirc;', 'i')
-        ret = ret.replace('&acirc;', 'a')
-        ret = ret.replace('_(video)', '')  
-        ret = ret.replace(',', '')
-        ret = ret.replace('.', '')
-        ret = ret.replace('!', '')
-        ret = ret.replace('?', '')
-        ret = ret.replace(':', '')
+        ret = utils.get_webfriendly_string(ret)
+        print ret
         return ret + '.' + extension
