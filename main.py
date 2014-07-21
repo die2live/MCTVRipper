@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from RssFetcher import RssFetcher
 from MediaDownloader import MediaDownloader
+from PodcastGenerator import PodcastGenerator
 import utils
 import os
 
@@ -21,19 +22,29 @@ def main():
     print('--------------------')
     print('--------------------')
 
-    #get HTML contents
+    podcast = PodcastGenerator()
+    fg = podcast.get_feedgenerator()
+    
     for a in rss_articles:
         print(a)        
         md = MediaDownloader()
+        
         try:
             print('Downloading video with id %s...' % a.video_id)
             filename = md.download_audio(a.video_id, '../tmp/', a.title)
-            utils.ftp_upload(filename, os.path.join('media', a.category), 'ftp.w-me.net', 21, 'pod@w-me.net', '6NAmo@Jr+u9!')
+            
+            store_path = os.path.join('media', a.category)
+            utils.ftp_upload(filename, store_path, 'ftp.w-me.net', 21, 'pod@w-me.net', '***')
+            
+            podcast.add_entry(fg, a, os.path.join(u'http://pod.w-me.net', store_path, os.path.basename(filename)))
+            
         except IOError as e:
             #TODO: add some handling
             print(e)
-        print('--------------------')        
-		
+        print('--------------------')
+        
+    rssfile = podcast.build_rss_file(fg)
+    utils.ftp_upload(rssfile, '', 'ftp.w-me.net', 21, 'pod@w-me.net', '***')
 
 if __name__ == '__main__':
     main()
