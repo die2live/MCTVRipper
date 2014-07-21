@@ -44,7 +44,7 @@ def main():
         print('--------------------')
         
     rssfile = podcast.build_rss_file(fg)
-    utils.ftp_upload(rssfile, '', 'ftp.w-me.net', 21, 'pod@w-me.net', '***')
+    utils.ftp_upload(rssfile, '~', 'ftp.w-me.net', 21, 'pod@w-me.net', '***')
 
 if __name__ == '__main__':
     main()

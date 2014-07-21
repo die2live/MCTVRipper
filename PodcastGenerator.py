@@ -31,7 +31,7 @@ class PodcastGenerator:
 		## TODO fe.id('http://lernfunk.de/media/654321/1')
 		fe.title(item.title)
 		fe.content(self.get_entry_content(item.link))
-		fe.enclosure(media_url)
+		fe.enclosure(url = media_url, type = 'audio/mp4')
 		
 		##TODO
 		
