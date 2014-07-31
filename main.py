@@ -33,10 +33,11 @@ def main():
             print('Downloading video with id %s...' % a.video_id)
             filename = md.download_audio(a.video_id, '../tmp/', a.title)
             
-            store_path = os.path.join('media', a.category)
-            utils.ftp_upload(filename, store_path, 'ftp.w-me.net', 21, 'pod@w-me.net', '***')
+            if filename != '':
+                store_path = os.path.join('media', a.category)
+                utils.ftp_upload(filename, store_path, 'ftp.w-me.net', 21, 'pod@w-me.net', '6NAmo@Jr+u9!')
             
-            podcast.add_entry(fg, a, os.path.join(u'http://pod.w-me.net', store_path, os.path.basename(filename)))
+                podcast.add_entry(fg, a, os.path.join(u'http://pod.w-me.net', store_path, os.path.basename(filename)))
             
         except IOError as e:
             #TODO: add some handling
@@ -44,7 +45,7 @@ def main():
         print('--------------------')
         
     rssfile = podcast.build_rss_file(fg)
-    utils.ftp_upload(rssfile, '~', 'ftp.w-me.net', 21, 'pod@w-me.net', '***')
+    utils.ftp_upload(rssfile, '~', 'ftp.w-me.net', 21, 'pod@w-me.net', '6NAmo@Jr+u9!')
 
 if __name__ == '__main__':
     main()
